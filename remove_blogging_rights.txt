@@ -1,0 +1,29 @@
+<?php
+
+/*
+ * Title: 		Remove blogging permissions from any user
+ * From:		Bruce Chamoff
+ * Description:		If a user has abused their writing privileges, this code will remove the Posts link from the admin.
+ */
+ 
+add_action('admin_menu','hide_menus',999);
+
+function hide_menus()
+{
+	$current_user 						= wp_get_current_user();	
+	$username 							= $current_user->user_login;
+	
+	// In this array, add as many usernames as needed.
+		$bloggers 							= array('USERNAME','USERNAME','USERNAME','USERNAME'); 
+
+	$editor_pages_to_remove 	= array('edit.php','edit.php?post_type=page','upload.php','edit-comments.php');
+	
+	if(in_array($username,$bloggers))
+	{
+		foreach($editor_pages_to_remove as $page)
+		{
+			remove_menu_page($page);	
+		}
+	}
+
+}

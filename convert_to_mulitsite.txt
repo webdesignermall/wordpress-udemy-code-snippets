@@ -1,0 +1,9 @@
+<?php
+
+/*
+ * Title: 		Transform the default WP installation to a multisite
+ * From:		Bruce Chamoff
+ * Description:		This code would be added to wp-config.
+ */
+ 
+define( 'WP_ALLOW_MULTISITE', true );

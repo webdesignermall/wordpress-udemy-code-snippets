@@ -1,0 +1,18 @@
+<?php
+
+/*
+ * Title: 		Add 10 Menus from a Loop
+ * From:		Bruce Chamoff
+ * Description:		If the theme has a lot of menu locations, create 10 of them.
+ */
+ 
+add_action('init','add_10_menus_locations') ;
+
+function add_10_menus_locations()
+{
+
+	for($m=1; $m<=10; $m++)
+	{
+		register_nav_menus( array('menu_' . $m   => __( 'Menu #' . $m, 'twentysixteen' )));
+	}
+} 

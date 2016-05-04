@@ -1,0 +1,29 @@
+<?php
+
+/*
+ * Title: 			WPCF7 - Dynamically Change Recipient
+ * From:			Bruce Chamoff
+ * Description:		Email a different recipient based on the department selected.
+ */
+ 
+add_action("wpcf7_before_send_mail", "wpcf7_change_recipient");
+
+function wpcf7_change_recipient (&$WPCF7_ContactForm) {
+	switch ($WPCF7_ContactForm->posted_data['dept']) {
+		case "Marketing":
+		$WPCF7_ContactForm->mail['recipient'] = "Brad <brad@email.com>";
+		break;
+
+		case "Customer Service":
+		$WPCF7_ContactForm->mail['recipient'] = "CustomerService <customerservice@email.com>";
+		break;
+
+		case "Sales":
+		$WPCF7_ContactForm->mail['recipient'] = "Sales <sales@email.com>";
+		break;
+
+		default:
+		$WPCF7_ContactForm->mail['recipient'] = "General <general@email.com>";
+	}
+}
+

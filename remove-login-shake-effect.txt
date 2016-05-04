@@ -1,0 +1,4 @@
+function remove_shake_effect() {
+        remove_action('login_head', 'wp_shake_js', 12);
+}
+add_action('login_head', 'remove_shake_effect');

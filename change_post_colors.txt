@@ -1,0 +1,12 @@
+add_action('init','change_post_colors');
+function change_post_colors(){
+//http://wpsnipp.com/index.php/functions-php/change-admin-postpage-color-by-status-draft-pending-published-future-private/#
+?>
+<style>
+.status-draft a {color: #F00 !important;}
+.status-pending a {color: #87C5D6 !important;}
+.status-publish a{color:green;}
+.status-private a{color:#F60;}
+</style>
+<?php
+}

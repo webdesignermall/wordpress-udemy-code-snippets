@@ -1,0 +1,14 @@
+<?php
+
+/*
+ * Title: 			WPCF7 - Get Sender's IP Address
+ * From:			Bruce Chamoff
+ * Description:		If we receive spam, we can get their IP address
+ */
+ 
+add_action("wpcf7_before_send_mail", "wpcf7_track_ip_address");
+
+function wpcf7_track_ip_address (&$WPCF7_ContactForm) {
+	$wpcf7_data->mail['body'] .= '<p>IP Address: '.$_SERVER['REMOTE_ADDR'].'</p>';
+}
+

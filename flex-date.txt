@@ -1,0 +1,15 @@
+<?php
+
+/*
+ * Title: 		Flex Date
+ * From:		Bruce Chamoff
+ * Description:		Create a date with any PHP format from a shortcode
+ */
+ 
+add_shortcode('get_flex_date','get_flex_date');
+function get_flex_date()
+{
+	return Date();
+}
+
+ 

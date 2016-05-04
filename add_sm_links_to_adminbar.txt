@@ -1,0 +1,55 @@
+<?php
+
+/*
+ * Title: 		Add social media links to admin bar
+ * From:		Bruce Chamoff
+ * Description:		Any link can be added:
+ */
+ 
+add_action( 'admin_bar_menu', 'social_media_links', 900 );
+function social_media_links($wp_admin_bar)
+{
+
+	$args = array(
+		'id'     => 'social_media',
+		'title'	=>	'Social Media',
+		'meta'   => array( 'class' => 'first-toolbar-group' ),
+	);
+	$wp_admin_bar->add_node( $args );	
+
+	
+			$args = array();
+	
+			array_push($args,array(
+				'id'		=>	'twitter',
+				'title'		=>	'Twitter',
+				'href'		=>	'http://www.twitter.com',
+				'parent'	=>	'social_media',
+			));
+			
+
+			array_push($args,array(
+				'id'     	=> 'youtube',
+				'title'		=>	'YouTube',
+				'href'		=>	'http://www.YouTube.com',
+				'parent' 	=> 'social_media',
+				'meta'   	=> array( 'class' => 'first-toolbar-group' ),
+			));
+
+			array_push($args,array(
+				'id'		=>	'fb',
+				'title'		=>	'Facebook',
+				'href'		=>	'http://www.facebook.com',
+				'parent'	=>	'social_media',
+			));
+			
+			//$sorted_args = array($targs,$yargs,$fargs);
+			sort($args);
+			for($a=0;$a<sizeOf($args);$a++)
+			{
+				$wp_admin_bar->add_node($args[$a]);
+			}
+
+			
+	
+} 

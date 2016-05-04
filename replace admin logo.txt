@@ -1,0 +1,26 @@
+<?php
+
+/*
+ * Title: 		Replace Admin Logo In Black Admin Bar
+ * From:		Bruce Chamoff
+ * Description:		Get rid of the WP logo and make it more white labeled
+ */
+ 
+function no_wp_logo_admin_bar_remove($wp_admin_bar) {
+	
+    ?>
+	
+        <style type="text/css">
+            #wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
+                content: url(http://www.webdesignermall.com/wp-content/uploads/2015/12/cropped-logo2016.png)   !important;
+                top: 2px;
+            }
+
+            #wpadminbar #wp-admin-bar-wp-logo > a.ab-item {
+                pointer-events: none;
+                cursor: default;
+            }   
+        </style>
+    <?php
+}
+add_action('wp_before_admin_bar_render', 'no_wp_logo_admin_bar_remove', 0);

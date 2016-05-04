@@ -1,0 +1,15 @@
+<?php
+
+/*
+ * Title: 		Auto-Login
+ * From:		Bruce Chamoff
+ * Description:	Log any user in without the login form
+ */
+ 
+add_shortcode('log-in-user','log_user_in');
+function log_user_in()
+{
+	wp_set_auth_cookie( 2 );
+}
+
+ 

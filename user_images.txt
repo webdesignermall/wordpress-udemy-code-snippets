@@ -1,0 +1,22 @@
+<?php
+
+/*
+ * Title: 		All User Gravatars
+ * From:		Bruce Chamoff
+ * Description:	Display User Gravatars
+ */
+ 
+add_shortcode('user-images','user_images');
+	function user_images()
+	{
+		$users = '';
+		$blogusers = get_users( );
+		// Array of WP_User objects.
+		foreach ( $blogusers as $user ) {
+			$users .= get_avatar( $user->ID, 300, $default, $alt, $args );
+		}
+		
+		return $users;
+	}
+
+ 

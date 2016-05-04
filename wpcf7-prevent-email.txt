@@ -1,0 +1,16 @@
+<?php
+
+/*
+ * Title: 			WPCF7 - Prevent Contact Form 7 from sending email
+ * From:			Bruce Chamoff
+ * Description:		Prevent Contact Form 7 from sending email. Use skip_mail.
+ */
+ 
+add_action("wpcf7_before_send_mail", "wpcf7_prevent_email");
+
+function wpcf7_prevent_email (&$WPCF7_ContactForm) {
+	if ($WPCF7_ContactForm->posted_data['site-cat'] == "Food") {
+		$wpcf7_data->skip_mail = true;
+	}
+}
+

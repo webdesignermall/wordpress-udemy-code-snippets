@@ -1,0 +1,23 @@
+<?php
+
+/*
+ * Title: 		Greet Admins
+ * From:		Bruce Chamoff
+ * Description:		Show message when admin logins in.
+ */
+ 
+add_action('wp_dashboard_setup', 'our_dashboard_widgets');
+
+function our_dashboard_widgets() {
+	$current_user 		= 	wp_get_current_user();
+	$first_name 		=	$current_user->user_firstname;
+	wp_add_dashboard_widget('custom_help_widget', 'Back End For ' . $first_name, 'welcome_dashboard', 'side','high');
+}
+function welcome_dashboard() {
+	$current_user 		= 	wp_get_current_user();
+	$first_name 		=	$current_user->user_firstname;
+	$last_name 			=	$current_user->user_lastname ;
+	echo "Welcome, $first_name!";
+
+	
+}

@@ -1,0 +1,28 @@
+<?php
+
+/*
+ * Title: 		Random Post
+ * From:		Bruce Chamoff
+ * Description:		Print random post from any category
+ */
+ 
+
+	$args = array( 'posts_per_page' => 1, 'orderby' => 'rand' );
+	$postslist = get_posts( $args );
+	foreach ( $postslist as $post ) :
+	  setup_postdata( $post ); 
+		$permalink 		=	get_permalink();
+		$news_excerpt	=	get_the_excerpt();
+		$news_content	=	substr(strip_tags(get_the_content()),0,150);
+		
+		$news_excerpt	=	str_replace('[&hellip;]',"- <a href='$permalink'>Read More</a>",$news_excerpt);
+	  ?> 
+		<li class="random-post" >
+			<a href="<?php the_permalink() ?>" target="_parent"><?php the_title(); ?></a>
+			<p class="date"><?php the_date(); ?></p>
+			<div style='font-size:10pt;'><?php echo $news_content;?>...<a href="<?php the_permalink() ?>" target="_parent">Read More</a></div>
+		</li>
+	<?php
+	endforeach; 
+	wp_reset_postdata();
+					?>
