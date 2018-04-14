@@ -1,0 +1,10 @@
+<?php
+
+function happy_new_year()
+{
+	if(Date('n-j')=='1-1') {
+		return "<h1>Happy New Year!</h1>";
+	}
+}
+
+?>

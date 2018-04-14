@@ -1,0 +1,21 @@
+<?php
+
+/*
+ * Title: 			WPCF7 - Automatically add all fields without editing form 
+ * From:			Bruce Chamoff
+ * Description:		Sometimes, it is a pain to keep updating the form submissions, 
+				so I code CF7 to do it on its own.
+ */
+ 
+add_action("wpcf7_before_send_mail", "wpcf7_add_all_fields");
+
+function wpcf7_add_all_fields (&$WPCF7_ContactForm) {
+	$new_body = "";
+	foreach($WPCF7_ContactForm->posted_data as $k=>$v)
+	{
+		$new_body .= "<p>$k: $v</p>";
+	}
+
+	$wpcf7_data->mail['body'] .= $new_body;
+}
+

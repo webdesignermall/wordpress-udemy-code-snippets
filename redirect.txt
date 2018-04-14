@@ -1,0 +1,25 @@
+<?php
+/*
+Plugin Name: Web Designer Mall Snippets 2018
+Description: From Hot Web Ideas
+Author: Bruce Chamoff
+Author URI: https://www.webdesignermall.com
+Version: 1.1
+*/
+
+// Code Snippet: Redirect Posts with an Associative Array
+
+add_action('wp_head','wdm_redirect_post_array');
+
+function wdm_redirect_post_array(){
+	global $post;
+	$redirected_post_ids = array(
+		1644	=>'https://www.shopify.com/partners/blog/announcing-unite-2018',
+		1647	=>'https://codex.wordpress.org/Version_4.9',
+		12		=>'http://www.yahoo.com'
+	);
+	$post_id = $post->ID;
+	if(array_key_exists($post_id,$redirected_post_ids)) {
+		wp_redirect($redirected_post_ids[$post_id]);
+	}
+}

@@ -1,0 +1,16 @@
+<?php
+/*
+Plugin Name: Increase Custom Field Limit
+Description: This plugin will increase the default limit of 30 custom fields to any number you'd like.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+add_filter( 'postmeta_form_limit' , 'customfield_limit_increase' );
+
+function customfield_limit_increase( $limit ) {
+    $limit = 200;
+    return $limit;
+}
+

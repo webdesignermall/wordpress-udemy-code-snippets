@@ -1,0 +1,163 @@
+<?php
+/*
+Plugin Name: Any RSS Feed
+Description: Display a RSS feed from any website in your sidebars or anywhere on your WordPress site.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.net
+*/
+
+$summary_title = "";
+
+function convertedMonth($m)
+{
+	switch($m)
+	{
+		case "Jan":
+		return 1;
+		break;
+		case "Feb":
+		return 2;
+		break;
+		case "Mar":
+		return 3;
+		break;
+		case "Apr":
+		return 4;
+		break;
+		case "May":
+		return 5;
+		break;
+		case "Jun":
+		return 6;
+		break;
+		case "Jul":
+		return 7;
+		break;
+		case "Aug":
+		return 8;
+		break;
+		case "Sep":
+		return 9;
+		break;
+		case "Oct":
+		return 10;
+		break;
+		case "Nov":
+		return 11;
+		break;
+		case "Dec":
+		return 12;
+		break;
+	}
+}
+
+function formattedDate($d)
+{
+		$ex = explode("-",$d);
+		return $ex[1] . "/" . $ex[2] . "/" . $ex[0];
+}
+
+function fix($text)
+{
+	$text = str_replace("Â","",$text);
+	$text  = str_replace("â€œ","<i>",$text);
+	$text  = str_replace("â€","</i>",$text);
+	
+	return strip_tags($text,"<img>,<br>,<p/>");
+}
+
+add_shortcode('nyt-rss-sports','nyt_rss_sports');
+			
+			function nyt_rss_sports()
+			{
+
+			$feed_data = '';
+
+			  $xml = simplexml_load_file('http://rss.nytimes.com/services/xml/rss/nyt/Sports.xml');
+				foreach ($xml->channel->item as $item) {
+					$title = ucwords($item->title);
+					$title = fix(str_replace("'","''",$title));
+					$link = $item->link;
+
+					$today = Date("m/d/Y");
+					$epochToday=mktime(0,0,0,Date("m"),Date("d"),Date("Y"));
+
+					$desc = fix($item->description);
+					$desc = strip_tags(str_replace("'","''",$desc),"<img>");
+					$pubDate = $item->pubDate;
+					$cm = convertedMonth(substr($pubDate,8,3));
+					$m = substr($pubDate,8,3);
+					$d = substr($pubDate,5,2);
+					$y = substr($pubDate,12,4);
+					$mysqlDate = "$y-$cm-$d";
+					$regularDate = "$cm/$d/$y";
+					$epochPubDate=mktime(0,0,0,$cm,$d,$y);
+					$postAge = ($epochToday-$epochPubDate)/86400;
+
+					$desc = str_replace('Continue reading', "<a href='$link' target='_blank'>Continue reading</a>",$desc);
+					$title = str_replace("™", "'",$title);
+					$desc = str_replace("™", "'",$desc);
+
+					$desc = substr($desc,0,250);
+					$desc = strip_tags($desc, "<img>");
+
+					$summary_title = "<a href='$link' target='_blank' class='posttitle'>$title</a><br/>";
+
+					$feed_data .= ("
+						$summary_title<br/>$pubDate<br/>$desc<hr/>
+					");
+
+				} // END OF SIMPLEXML LOOP
+
+				return $feed_data;
+			}
+
+
+add_shortcode('nyt-rss-realestate','nyt_rss_realestate');
+			
+			function nyt_rss_realestate()
+			{
+
+			$feed_data = '';
+
+			  $xml = simplexml_load_file('http://rss.nytimes.com/services/xml/rss/nyt/RealEstate.xml');
+				foreach ($xml->channel->item as $item) {
+					$title = ucwords($item->title);
+					$title = fix(str_replace("'","''",$title));
+					$link = $item->link;
+
+					$today = Date("m/d/Y");
+					$epochToday=mktime(0,0,0,Date("m"),Date("d"),Date("Y"));
+
+					$desc = fix($item->description);
+					$desc = strip_tags(str_replace("'","''",$desc),"<img>");
+					$pubDate = $item->pubDate;
+					$cm = convertedMonth(substr($pubDate,8,3));
+					$m = substr($pubDate,8,3);
+					$d = substr($pubDate,5,2);
+					$y = substr($pubDate,12,4);
+					$mysqlDate = "$y-$cm-$d";
+					$regularDate = "$cm/$d/$y";
+					$epochPubDate=mktime(0,0,0,$cm,$d,$y);
+					$postAge = ($epochToday-$epochPubDate)/86400;
+
+					$desc = str_replace('Continue reading', "<a href='$link' target='_blank'>Continue reading</a>",$desc);
+					$title = str_replace("™", "'",$title);
+					$desc = str_replace("™", "'",$desc);
+
+					$desc = substr($desc,0,250);
+					$desc = strip_tags($desc, "<img>");
+
+					$summary_title = "<a href='$link' target='_blank' class='posttitle'>$title</a><br/>";
+
+					$feed_data .= ("
+						$summary_title<br/>$pubDate<br/>$desc<hr/>
+					");
+
+				} // END OF SIMPLEXML LOOP
+
+				return $feed_data;
+			}
+
+?>

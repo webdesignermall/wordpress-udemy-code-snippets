@@ -1,0 +1,16 @@
+/*
+Plugin Name: Add Twitter Share Link
+Description: Add Twitter Share Link Before or After Post Content
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+add_filter('the_content','add_twitter_share');
+
+function add_twitter_share($content) {
+return ('
+<a href="http://twitter.com/home?status=' . 
+get_the_permalink() . '" title="' . get_the_title() . '" target="_blank"><img width="100" src="https://media.assets.eco.on.ca/web/2016/08/Twitter-Share-Button.png"></a>
+') . '<hr />' . $content;
+}

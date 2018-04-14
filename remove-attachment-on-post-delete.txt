@@ -1,0 +1,10 @@
+add_action( 'before_delete_post', 'wdm_attachment_on_delete' );
+
+function wdm_attachment_on_delete($post_id)
+{
+        if(has_post_thumbnail( $post_id ))
+        {
+          $aid = get_post_thumbnail_id( $post_id );
+          wp_delete_attachment($aid);
+        }
+}

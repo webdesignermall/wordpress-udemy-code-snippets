@@ -1,0 +1,11 @@
+add_filter( 'the_content', 'wdm_add_featured_image_to_rss' );
+function wdm_add_featured_image_to_rss( $content ) {
+    global $post;
+    if( is_feed() ) {
+        if ( has_post_thumbnail( $post->ID ) ){
+            $output = get_the_post_thumbnail( $post->ID, 'thumbnail' );
+            $rss = $output . $content;
+        }
+    }
+    return $rss;
+}

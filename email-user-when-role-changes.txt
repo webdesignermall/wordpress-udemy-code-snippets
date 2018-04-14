@@ -1,0 +1,23 @@
+<?php
+/*
+Plugin Name: Email User When Role Changes
+Description: With this code snippet, you can email the user when their user role changes.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function email_user_when_update_role( $user_id, $new_user_role ) {
+        $site_url = get_bloginfo('wpurl');
+        $user_data = get_userdata( $user_id );
+		$user_display_name = $user_data->display_name;
+		$firstname = $user_date->user_firstname;
+        $email_address = $user_data->user_email;
+        $message = ("
+		Dear $firstname,
+		Your role has changed on ".$site_url.". 
+		Your new role is " . $new_user_role
+		);
+        wp_mail($email_address, "Role changed: ".$site_url, $message);
+}
+add_action( 'set_user_role', 'email_user_when_update_role', 15, 2);

@@ -1,0 +1,4 @@
+<?php
+global $current_user;
+get_currentuserinfo();
+echo get_avatar($current_user->ID);

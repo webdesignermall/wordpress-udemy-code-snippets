@@ -1,0 +1,9 @@
+
+        		<a href="<?php echo get_theme_mod('behance');?>"><div id="behance" class="object">E</div></a>
+      	  		<a href="<?php echo get_theme_mod('dribble');?>"><div id="dribbble" class="object">D</div></a>
+	        	<a href="<?php echo get_theme_mod('facebook');?>"><div id="facebook" class="object">F</div></a>
+        		<a target="_blank" href="<?php echo get_theme_mod('googleplus');?>"><div id="google" class="object">G</div></a>
+        		<a target="_blank" href="<?php echo get_theme_mod('linkedin');?>"><div id="linked" class="object">I</div></a>
+
+
+

@@ -1,0 +1,15 @@
+<?php
+
+/*
+ * Title: 			WPCF7 - Get Source Page 
+ * From:			Bruce Chamoff
+ * Description:		Get IP Address
+ */
+ 
+add_action("wpcf7_before_send_mail", "wpcf7_track_ip_address");
+
+function wpcf7_track_ip_address (&$WPCF7_ContactForm) {
+	$source_page = $_SERVER['HTTP_REFERER'];
+	$wpcf7_data->mail['body'] .= '<p>Source Page: '.source_page.'</p>';
+}
+

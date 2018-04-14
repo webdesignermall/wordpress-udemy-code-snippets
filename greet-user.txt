@@ -1,0 +1,18 @@
+<?php
+
+/*
+ * Title: 		Greet User
+ * From:		Bruce Chamoff
+ * Description:		After a login, say hello to the user.
+ */
+ 
+add_shortcode('greet_user','greet_user');
+function greet_user()
+{
+	$current_user 		= 	wp_get_current_user();
+	$first_name 		=	$current_user->user_firstname;
+	$last_name 			=	$current_user->user_lastname ;
+	return "Welcome, $first_name";
+}
+
+ 

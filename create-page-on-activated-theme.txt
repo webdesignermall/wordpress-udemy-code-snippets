@@ -1,0 +1,10 @@
+if (isset($_GET['activated']) && is_admin()){
+        $new_page = array(
+                'post_type' => 'page',
+                'post_title' => 'We just activated a theme',
+                'post_content' => 'Welcome! This is the first page created with this theme. Feel free to change it.',
+                'post_status' => 'publish',
+                'post_author' => 1,
+        );
+		wp_insert_post($new_page);
+}

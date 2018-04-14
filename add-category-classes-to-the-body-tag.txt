@@ -1,0 +1,22 @@
+<?php
+/*
+Plugin Name: Web Designer Mall Snippets 2018
+Description: From Hot Web Ideas
+Author: Bruce Chamoff
+Author URI: https://www.webdesignermall.com 
+Version: 1.1
+*/
+
+// Code Snippet: Add all categories to the body class for any post
+
+       add_filter('body_class','wdm_cat_to_body_class',10,2);
+        function wdm_cat_to_body_class($classes, $class) {
+                if (is_single() ) {
+                        global $post;
+                        foreach((get_the_category($post->ID)) as $category) {
+                                $classes[] = 'wdm-post-category-'.$category->category_nicename;
+                        }
+                }
+                return $classes;
+        }
+

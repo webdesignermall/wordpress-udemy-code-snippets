@@ -1,0 +1,26 @@
+<?php
+/*
+Plugin Name: Simple Locations
+Description: A list of simple locations
+*/
+
+add_action( 'init', 'create_simple_location_type' );
+
+// Our custom post type function
+function create_simple_location_type() {
+
+	register_post_type( 'simple_locations',
+	// CPT Options
+		array(
+			'labels' => array(
+				'name' => __( 'Limited Locations' ),
+				'singular_name' => __( 'Limited Location' )
+			),
+			'public' => true,
+			'has_archive' => true,
+			'rewrite' => array('slug' => 'simple_locations'),
+		)
+	);
+}
+
+?>

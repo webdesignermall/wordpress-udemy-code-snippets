@@ -1,0 +1,30 @@
+// Paste this code into your theme's functions.php file or any plugin file
+
+// Code Snippet: Get and display views 
+
+function wdm_show_view($postID){
+    $number_of_views = 'number_of_views';
+    $count = get_post_meta($postID, $number_of_views, true);
+    if($count==''){
+        delete_post_meta($postID, $number_of_views);
+        add_post_meta($postID, $number_of_views, '0');
+        return "0 Views";
+    }
+	if($count>=10) {
+		return '<div class="number-of-views">' $count . ' Readers</div>';
+	} else {
+		return '';
+	}
+}
+function wdm_add_view($postID) {
+    $number_of_views = 'number_of_views';
+    $count = get_post_meta($postID, $number_of_views, true);
+    if($count==''){
+        $count = 0;
+        delete_post_meta($postID, $number_of_views);
+        add_post_meta($postID, $number_of_views, '0');
+    }else{
+        $count++;
+        update_post_meta($postID, $number_of_views, $count);
+    }
+}

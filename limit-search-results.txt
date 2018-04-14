@@ -1,0 +1,20 @@
+<?php
+/*
+Plugin Name: Web Designer Mall Snippets 2018
+Description: From Hot Web Ideas
+Author: Bruce Chamoff
+Author URI: https://www.webdesignermall.com
+Version: 1.1
+*/
+
+// Code Snippet: Redirect Posts with an Associative Array
+
+add_action('pre_get_posts','wdm_limit_search_results');
+
+function wdm_limit_search_results($query) {
+  if ( !is_admin() && $query->is_main_query() ) {
+    if ($query->is_search) {
+      $query->set('post_type', array('post','page'));
+    }
+  }
+}

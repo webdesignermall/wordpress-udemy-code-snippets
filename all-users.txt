@@ -1,0 +1,22 @@
+<?php
+
+/*
+ * Title: 		All Users
+ * From:		Bruce Chamoff
+ * Description:		Get a list of all users
+ */
+ 
+add_shortcode('all-users','all_users');
+function all_users()
+{
+	$users = '';
+	$blogusers = get_users( 'blog_id=1&orderby=nicename&role=subscriber' );
+	// Array of WP_User objects.
+	foreach ( $blogusers as $user ) {
+		$users .= '<span>' . esc_html( $user->user_email ) . '</span>';
+	}
+	
+	return $users;
+}
+
+ 

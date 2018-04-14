@@ -1,0 +1,28 @@
+<?php
+/*
+Plugin Name: Tag Cloud Shortcode
+Description: Create Your Own Tag Cloud
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.net
+*/
+
+add_shortcode('hwi-tag-cloud','generate_tag_cloud');
+
+function generate_tag_cloud()
+{
+	$args = array(
+	'smallest'			=> 20,
+	'largest'			=> 40,
+	'unit'				=> 'pt',
+	'number'			=> 5,
+	'format'			=> 'flat',
+	'separator'		=> '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+	'order'			=> 'ASC',
+	'orderby'			=> 'count'
+	);
+
+	wp_tag_cloud($args);
+}
+
+?>

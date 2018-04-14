@@ -1,0 +1,10 @@
+<?php
+
+echo "<h2>Random Rock Band</h2>";
+
+$args = array(
+	'post_type'				=> 'rockbands',
+	'orderby'					=> 'rand',
+	'posts_per_page'		=> 1,
+);
+

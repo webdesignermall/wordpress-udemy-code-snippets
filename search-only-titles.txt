@@ -1,0 +1,31 @@
+<?php
+/*
+Plugin Name: Include Only Titles in Search Results
+Description: ​By default, WordPress searches for terms in both the titles and the body of the post, but if you have a big theme with a lot of the search terms, the search results can be messy, so with this code snippet, you can limit search results to only post titles.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function search_only_titles( $search_terms, &$wp_query )
+{
+    global $wpdb;
+    if ( empty( $search_terms ) )
+        return $search_terms; // skip processing - no search term in query
+    $q = $wp_query->query_vars;
+    $n = ! empty( $q['exact'] ) ? '' : '%';
+    $search_terms =
+    $search_terms_plus_other = '';
+    foreach ( (array) $q['search_terms'] as $term ) {
+        $term = esc_sql( like_escape( $term ) );
+        $search_terms .= "{$search_terms_plus_other}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+        $search_terms_plus_other = ' AND ';
+    }
+    if ( ! empty( $search_terms ) ) {
+        $search_terms = " AND ({$search_terms}) ";
+        if ( ! is_user_logged_in() )
+            $search_terms .= " AND ($wpdb->posts.post_password = '') ";
+    }
+    return $search_terms;
+}
+//add_filter( 'posts_search', 'search_only_titles', 30, 2 );

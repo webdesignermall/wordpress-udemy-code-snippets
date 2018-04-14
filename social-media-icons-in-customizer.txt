@@ -1,0 +1,72 @@
+<?php
+
+
+add_action('customize_register','initiate_customizer');
+
+function initiate_customizer($wp_customize) {
+
+// Social Media Settings
+
+		$wp_customize->add_section('social_media_icons_section',array(
+			'title'		=> __('Social Media Icons','spore-theme'),
+			'priority'	=>	0,
+		));
+		
+		$wp_customize->add_setting('facebook',array(
+			'default'	=>	'http://www.facebook.com/',
+			'priority'	=>	1
+		));
+
+		$wp_customize->add_control(new WP_Customize_Control($wp_customize,'facebook_textbox',array(
+			'label'			=>	__('Facebook','spore-theme'),
+			'section'		=>	'social_media_icons_section',
+			'settings'		=>	'facebook',
+		)));
+		
+		$wp_customize->add_setting('youtube',array(
+			'default'	=>	'http://www.youtube.com/',
+			'priority'	=>	1
+		));
+
+		$wp_customize->add_control(new WP_Customize_Control($wp_customize,'youtube_textbox',array(
+			'label'			=>	__('YouTube','spore-theme'),
+			'section'		=>	'social_media_icons_section',
+			'settings'		=>	'youtube',
+		)));
+
+
+		$wp_customize->add_setting('linkedin',array(
+			'default'	=>	'http://www.linkedin.com/',
+			'priority'	=>	1
+		));
+
+		$wp_customize->add_control(new WP_Customize_Control($wp_customize,'linkedin_textbox',array(
+			'label'			=>	__('LinkedIn','spore-theme'),
+			'section'		=>	'social_media_icons_section',
+			'settings'		=>	'linkedin',
+		)));
+		
+			$wp_customize->add_setting('googleplus',array(
+			'default'	=>	'http://www.googleplus.com/',
+			'priority'	=>	1
+		));
+
+		$wp_customize->add_control(new WP_Customize_Control($wp_customize,'googleplus_textbox',array(
+			'label'			=>	__('Google Plus','spore-theme'),
+			'section'		=>	'social_media_icons_section',
+			'settings'		=>	'googleplus',
+		)));
+
+
+		
+		$wp_customize->add_setting('twitter',array(
+			'default'	=>	'http://www.twitter.com/',
+			'priority'	=>	1
+		));
+
+		$wp_customize->add_control(new WP_Customize_Control($wp_customize,'twitter_textbox',array(
+			'label'			=>	__('Twitter','spore-theme'),
+			'section'		=>	'social_media_icons_section',
+			'settings'		=>	'twitter',
+		)));
+

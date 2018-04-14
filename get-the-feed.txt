@@ -1,0 +1,37 @@
+<?php
+/*
+Plugin Name: Get Any Feed
+Description: From any feed just by passing in the URL into a template tag for your theme.
+Author: Bruce Chamoff, https://www.udemy.com/user/brucechamoff/
+Version: 1.0
+Author URI: https://www.WebDesignerMall.com
+*/
+
+
+function getFeed($feed_url, $number_items, $desc_length=125, $readMore='Read More') {
+
+if(function_exists('fetch_feed')) {
+        include_once(ABSPATH.WPINC.'/feed.php');
+        $feed = fetch_feed($feed_url);
+        $item_max = $feed->get_item_quantity($number_items); 
+        $feed_items = $feed->get_items(0, $item_max); 
+}
+if ($item_max == 0) echo '<div>This feed has no items at this time.</div>';
+else foreach ($feed_items as $item) : 
+
+echo ('
+<div class="feed-items">
+<div class="">
+        <a href="' . $item->get_permalink() .' "
+          title=" ' . $item->get_date('j F Y @ g:i a') .'">
+                 ' . $item->get_title() . '
+        </a>
+</div>
+<div>
+ ' . substr($item->get_description(), 0, $desc_length) . '
+        <a href="'.$item->get_permalink() .'">'.$readMore.'</a>
+</div>
+</div>
+');
+endforeach; 
+}

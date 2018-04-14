@@ -1,0 +1,144 @@
+/*
+Theme Name: Complete Theme 2.1
+Author: WebDesignerMall.com
+Author URI: http://www.webdesignermall.com
+Description: Present any WordPress website in its entire beauty!!! With this theme, you get support for Woocommerce, BuddyPress and because it is responsive, it looks amazing on mobile devices as well as your desktop and laptop computers!
+Version: 2.0
+*/
+
+BODY
+{
+	background-color:#FFF;
+}
+
+/*  SECTIONS  */
+.section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF THREE  */
+.span_3_of_3 { width: 100%; }
+.span_2_of_3 { width: 66.13%; }
+.span_1_of_3 { width: 32.26%; }
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+	.col {  margin: 1% 0 1% 0%; }
+	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
+}
+
+.searchform input[type="submit"]
+{
+	background:#3399FF;
+	border: navy 2px solid;
+	color:#FFF;
+	border-radius:5px;
+}
+
+.searchform input[type="text"]
+{
+	background:#DDD;
+	padding:3px;
+	color:#555;
+	border:#999 1px solid;
+	border-radius:5px;
+}
+
+footer
+{
+	background:#333399;
+	width:100%;
+	min-height:50px;
+	clear:both;
+	color:#FFF;
+	text-align:center;
+}
+
+#footer-menu a
+{
+	color:#FFF;
+	font-family:arial;
+	font-size:9pt;
+}
+
+#footer-menu li
+{
+	display:inline;
+}
+
+#left-sidebar-menu
+{
+	position:relative;
+}
+
+#left-sidebar-menu li
+{
+	border-bottom:2px solid #005500;
+	padding:5px 0px;
+	list-style-type:none;
+}
+
+#left-sidebar-menu a
+{
+	color:#090;
+	font-family:arial;
+	font-size:10pt;
+	text-decoration:none;
+}
+
+.sub-menu li
+{
+	display:none;
+	background:#CFC;
+	height:100px;
+	width:300px;
+	z-index:1000000;
+	position:absolute;
+	top:5px;
+	left:120px;
+}
+
+#map {
+        width: 300px;
+        height: 500px;
+      }
+
+
+#popup
+{
+	width:500px;
+	height:400px;
+	padding:20px;
+	background:#FF0;
+	border:#FF0000 12px solid;
+	border-radius:20px;
+	box-shadow:12px 12px 15px #000;
+	z-index:1000;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	opacity:.95;
+	text-align:center;
+	font-size:30pt;
+	color:#3399FF;
+	display:none;
+}

@@ -1,0 +1,226 @@
+<?php
+
+/*
+	Plugin Name: Populate Blogs from Latest Blog Posts
+	Description: Add blogs from Latest Blog Posts 
+*/
+
+
+add_action('admin_menu','hwi_populate_blogs');
+add_shortcode('import-blog-posts','hwi_update_blog_posts');
+
+function hwi_populate_blogs()
+{
+	add_posts_page('Add Blog Posts', 'Update Blog Posts', 'manage_options','populate_blogs', 'hwi_update_blog_posts');
+	//add_menu_page('Populate Blogs', 'Populate Blogs', 'manage_options','populate_blogs', 'hwi_update_blog_posts','',25.75);
+}
+
+	function fix($text)
+	{
+		$text = str_replace("Â","",$text);
+		$text  = str_replace("â€œ","<i>",$text);
+		$text  = str_replace("â€","</i>",$text);
+		
+		return strip_tags($text,"<img>,<br>,<p/>");
+	}
+
+
+function hwi_update_blog_posts($post_id)
+{
+
+	global $wpdb;
+	// These feeds come from http://latestblogposts.com/feeds.php
+
+			
+	
+					// Change your RSS Feed Here
+						$rss	= 'http://www.nycservicesblog.info/feed/';
+						$cat	= 'sports';
+						$feat_image = "#"
+						
+						$xml = simplexml_load_file($rss);
+						foreach ($xml->channel->item as $item) {
+							$title = ucwords($item->title);
+							$title = fix(str_replace("'","''",$title));
+							$title = clean($title);
+
+							$desc = fix($item->description);
+							$desc = strip_tags(str_replace("'","''",$desc),"<img>");
+							$desc = clean($desc);
+
+							$pubDate = $item->pubDate;
+							$cm = convertedMonth(substr($pubDate,8,3));
+							$m = substr($pubDate,8,3);
+							$d = substr($pubDate,5,2);
+							$y = substr($pubDate,12,4);
+							$mysqlDate = "$y-$cm-$d";
+
+							$sql_title = "SELECT count(post_title) FROM $wpdb->posts WHERE post_status='publish' and post_title like '$title'";
+							$post_if = $wpdb->get_var($sql_title);
+							//echo "$post_if posts of $title  <br/>";
+
+ 
+						
+							if($post_if==0) {
+
+
+								$post_id = wp_insert_post(
+									array(
+									'post_title'			=>	$title,
+									'post_type'		=>	'post', 
+									'post_content'	=>	$desc,
+									'post_date'		=>	$mysqlDate,
+									'post_status'		=>	'publish',
+									)
+								);
+
+
+									echo "New ID: " . $post_id, " $title on $mysqlDate <hr/>";
+									/*
+									echo "<h4>From Blog: $blog_title</h4>";
+									echo "$image<br/>";
+									echo "Date: $mysqlDate<br/>";
+									echo "RSS: $rss<br/>";
+									echo "Cat: $cat<br/>";
+									echo "image $feat_image<br/>";
+									*/
+
+									// Custom field called rss_feed_url
+									add_post_meta($post_id, 'rss_feed_url', $rss);
+
+									wp_set_object_terms( $post_id, $cat, 'category' );
+									Generate_Featured_Image($feat_image,$post_id );
+
+							}
+						
+						}			
+
+			
+			
+}
+			
+function clean($string) {
+   return preg_replace('/[^A-Za-z0-9\-]/', ' ', $string); // Removes special chars.
+}
+
+function wp_exist_post_by_title($title_str) {
+}
+
+
+
+
+
+
+
+
+
+function hwi_add_blogs()
+{
+
+	global $wpdb;
+	// These feeds come from http://latestblogposts.com/feeds.php
+
+	$blogs = array();
+	foreach($blogs as $blog)
+			{
+				$blog_array = explode('|||',$blog);
+				//echo $blog_array[0], "<br/>";
+				//echo $blog_array[6], "<br/>";
+
+				$id = wp_insert_post(
+					array(
+					'post_title'=>$blog_array[0],
+					'post_type'=>'blog', 
+					'post_content'=>$blog_array[1],
+					'post_date'=>$blog_array[6],
+					'post_status'	 => 'publish',
+					)
+				); 
+				
+				//echo "ID: " . $id, "<br/>";
+
+				add_post_meta($id, 'rss_feed_url', $blog_array[2]);
+				add_post_meta($id, 'url', $blog_array[3]);
+
+				wp_set_object_terms( $id, ucwords(strtolower($blog_array[5])), 'category' );
+
+				Generate_Featured_Image('http://www.longislandblogposts.com/images/icons/' . $blog_array[4],$id );
+
+				//echo "<hr/>";
+			
+			
+			}
+
+			//echo "<h3>No blogs to populate at this time.</h3>";
+
+}
+
+
+function Generate_Featured_Image( $image_url, $post_id  ){
+    $upload_dir = wp_upload_dir();
+    $image_data = file_get_contents($image_url);
+    $filename = basename($image_url);
+    if(wp_mkdir_p($upload_dir['path']))     $file = $upload_dir['path'] . '/' . $filename;
+    else                                    $file = $upload_dir['basedir'] . '/' . $filename;
+    file_put_contents($file, $image_data);
+
+    $wp_filetype = wp_check_filetype($filename, null );
+    $attachment = array(
+        'post_mime_type' => $wp_filetype['type'],
+        'post_title' => sanitize_file_name($filename),
+        'post_content' => '',
+        'post_status' => 'inherit'
+    );
+    $attach_id = wp_insert_attachment( $attachment, $file, $post_id );
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+    $res1= wp_update_attachment_metadata( $attach_id, $attach_data );
+    $res2= set_post_thumbnail( $post_id, $attach_id );
+}
+
+
+
+function convertedMonth($m)
+{
+	switch($m)
+	{
+		case "Jan":
+		return 1;
+		break;
+		case "Feb":
+		return 2;
+		break;
+		case "Mar":
+		return 3;
+		break;
+		case "Apr":
+		return 4;
+		break;
+		case "May":
+		return 5;
+		break;
+		case "Jun":
+		return 6;
+		break;
+		case "Jul":
+		return 7;
+		break;
+		case "Aug":
+		return 8;
+		break;
+		case "Sep":
+		return 9;
+		break;
+		case "Oct":
+		return 10;
+		break;
+		case "Nov":
+		return 11;
+		break;
+		case "Dec":
+		return 12;
+		break;
+	}
+}
+
+?>

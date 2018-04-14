@@ -1,0 +1,12 @@
+$args = array(
+'smallest'			=> 20,
+'largest'				=> 40,
+'unit'					=> 'pt',
+'number'			=> 5,
+'format'				=> 'flat',
+'separator'		=> '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+'order'				=> 'ASC',
+'orderby'			=> 'count'
+);
+
+wp_tag_cloud($args);

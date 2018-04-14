@@ -1,0 +1,11 @@
+// Code Snippet: Remove the URL field from Comments
+
+//add_filter('comment_form_default_fields', 'wdm_remove_url_from_comment_form');
+function wdm_remove_url_from_comment_form($fields){
+    if(isset($fields['url'])) {
+       unset($fields['url']);
+	}
+
+       return $fields;
+
+}

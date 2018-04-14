@@ -1,0 +1,4 @@
+add_filter( 'registration_redirect', 'wdm_redirect_new_user' );
+function wdm_redirect_new_user(){
+    return home_url( '/welcome-to-web-designer-mall/' );
+}

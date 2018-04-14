@@ -1,0 +1,19 @@
+<?php
+/*
+Plugin Name: Display all user roles
+Description: With this code snippet, you can display a list of sorted user roles.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function all_user_roles() {
+	$objRoles = new WP_Roles();
+	$roles = $objRoles->get_names();
+	echo '<ul>';
+	sort($roles);
+	foreach ($roles as $role) {
+			echo '<li>'.$role.'</li>';
+	}
+	echo '</ul>';
+}

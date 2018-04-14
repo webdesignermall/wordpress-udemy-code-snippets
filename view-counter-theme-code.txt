@@ -1,0 +1,9 @@
+<?php
+
+// Paste this code into any theme file or templates including page.php, single.php, content-single.php, content-page.php
+
+// Enter this code into single.php and/or page.php
+wdm_add_view(get_the_ID());
+echo wdm_show_view(get_the_ID());
+
+?>

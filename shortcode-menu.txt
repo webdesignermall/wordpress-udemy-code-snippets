@@ -1,0 +1,31 @@
+
+// Code Snippet: Shortcode Admin Menu
+
+		add_action('media_buttons','add_sc_select',11);
+		add_action('admin_head', 'wdm_shortcode_admin_menu');
+
+		function add_sc_select(){
+		    $hide_shortcodes = array("audio");
+		    echo '&nbsp;<select id="shortcodes-menu"><option> = Select Shortcode = </option>';
+
+			global $shortcode_tags;
+
+		    foreach ($shortcode_tags as $key => $val){
+		            if(!in_array($key,$hide_shortcodes)){
+		            $shortcodes_list .= '<option value="['.$key.'][/'.$key.']">'.$key.'</option>';
+		            }
+		        }
+		     echo $shortcodes_list;
+		     echo '</select>';
+		}
+		function wdm_shortcode_admin_menu() {
+		        echo '<script type="text/javascript">
+		        jQuery(document).ready(function(){
+		           jQuery("#shortcodes-menu").change(function() {
+		                          send_to_editor(jQuery("#shortcodes-menu :selected").val());
+		                          return false;
+		                });
+		        });
+		        </script>';
+		}
+

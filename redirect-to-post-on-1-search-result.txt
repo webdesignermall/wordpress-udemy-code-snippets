@@ -1,0 +1,18 @@
+<?php
+/*
+Plugin Name:  Redirect Search Results To Post Page on 1 Search Result
+Description: ​What happens by default in WordPress when someone searches? You get a list of search results. Wouldn't it be better for user experience that when only one search result comes up, we tell WordPress to automatically redirect to that page? We can with this code snippet.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function redirect_to_post_on_1_search_result() {
+    if (is_search()) {
+        global $wp_query;
+        if ($wp_query->post_count == 1) {
+            wp_redirect( get_permalink( $wp_query->posts['0']->ID ) );
+        }
+    }
+}
+add_action('template_redirect', 'redirect_to_post_on_1_search_result');

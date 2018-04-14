@@ -1,0 +1,23 @@
+<?php
+
+// Insert this into any template / theme file.
+
+	global $current_user;
+	get_currentuserinfo();
+	
+	$first = $current_user->user_firstname;
+	$email = $current_user->user_email;
+	$user_id = $current_user->ID;
+	
+	echo get_avatar($current_user->ID);
+
+		if($user_id>0) {
+			echo ("
+			<div>
+			Greetings, $first! Welcome to our website. We will notify you at $email.
+			</div>
+			<div>
+				PAID or MEMBER-ONLY CONTENT HERE!
+			</div>
+			");
+		}

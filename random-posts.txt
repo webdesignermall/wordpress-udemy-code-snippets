@@ -1,0 +1,72 @@
+<?php
+/*
+Plugin Name: Web Designer Mall Snippets 2018
+Description: From Hot Web Ideas
+Author: Bruce Chamoff
+Author URI: https://www.webdesignermall.com
+Version: 1.1
+*/
+
+// Code Snippet: Redirect Posts with an Associative Array
+
+add_action('wp_head','wdm_redirect_post_array');
+
+function wdm_redirect_post_array(){
+	global $post;
+	$redirected_post_ids = array(
+		1644	=>'https://www.shopify.com/partners/blog/announcing-unite-2018',
+		1647	=>'https://codex.wordpress.org/Version_4.9',
+		12		=>'http://www.yahoo.com'
+	);
+	$post_id = $post->ID;
+	if(array_key_exists($post_id,$redirected_post_ids)) {
+		wp_redirect($redirected_post_ids[$post_id]);
+	}
+}
+
+// Code Snippet: Add custom CSS classes to the body tag
+
+add_filter('body_class','wdm_add_body_class');
+
+function wdm_add_body_class($classes) {
+	$classes[] = 'this-class-should-be-added-to-body-tag';
+	$classes[] = 'my-custom-css-class';
+	return $classes;
+}
+
+
+
+// Code Snippet: Random Posts
+
+add_filter('the_content','wdm_list_random_posts');
+
+function wdm_list_random_posts($content) {
+
+	$new_content = "<div style='background:#9FF;'><h3>Read Latest Posts</h3>";
+
+	$args = array(
+		'post_type'			=>	array('page','post'),
+		'posts_per_page'	=>	3,
+		'orderby'				=>	'post_date',
+		'order'					=>	'DESC'
+	);
+
+	$the_query = new WP_Query( $args );
+
+	// The Loop
+	if ( $the_query->have_posts() ) {
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post();
+			$plink = get_the_date() . "<br/><a href='" . get_permalink() ."'>" . get_the_title() . "</a><hr/>';
+			$new_content = $new_content . '<div>' . $plink . '</div>';
+		}
+		/* Restore original Post Data */
+		wp_reset_postdata();
+	} else {
+		// no posts found
+	}
+
+	return $content . '<div>' . $new_content . '</div>';
+
+
+}

@@ -1,0 +1,21 @@
+<?php
+/*
+Plugin Name: Web Designer Mall Snippets 2018
+Description: From Hot Web Ideas
+Author: Bruce Chamoff
+Author URI: https://www.webdesignermall.com
+Version: 1.1
+*/
+
+
+// Code Snippet: Add custom CSS classes to the body tag
+
+add_filter('body_class','wdm_add_body_class');
+
+function wdm_add_body_class($classes) {
+	$classes[] = 'this-class-should-be-added-to-body-tag';
+	$classes[] = 'my-custom-css-class';
+	return $classes;
+}
+
+

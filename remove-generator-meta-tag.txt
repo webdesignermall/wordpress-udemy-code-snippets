@@ -1,0 +1,10 @@
+<?php
+/*
+Plugin Name: Remove the generator
+Description: If you want to prevent WordPress from displaying the generator meta tag, use this code snippet.
+Author: Bruce Chamoff, https://www.udemy.com/user/brucechamoff/
+Version: 1.0
+Author URI: https://www.WebDesignerMall.com
+*/
+
+remove_filter('wp_head','wp_generator');

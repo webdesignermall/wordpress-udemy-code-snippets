@@ -1,0 +1,18 @@
+<?php
+/*
+Plugin Name: Show Password Protected Posts In Search Results
+Description: By default, WordPress does not include password-protected posts in search results. This code snippet allows you to override that default.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function show_protected_posts_in_search_results( $search ) {
+        global $wpdb;
+        if( !is_user_logged_in() ) {
+                $pattern = " AND ({$wpdb->prefix}posts.post_password = '')";
+                $search = str_replace( $pattern, '', $search );
+        }
+        return $search;
+}
+//add_filter( 'posts_search', 'show_protected_posts_in_search_results' );

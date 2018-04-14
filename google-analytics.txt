@@ -1,0 +1,16 @@
+// Paste this code into your theme's functions.php file or any plugin file
+
+// Code Snippet: Hook in Google Analytics
+
+add_action('wp_head','wdm_google_analytics');
+
+function wdm_google_analytics(){
+	$ga = ('
+			<script>
+			// Google Analytics Code
+
+			</script>
+		');
+
+	echo $ga;
+}

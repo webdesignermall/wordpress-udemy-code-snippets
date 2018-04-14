@@ -1,0 +1,14 @@
+<?php
+
+	$args = array(
+		'post_type'			=> array('post','page'),
+		'author'				=> ENTER THE AUTHOR ID NUMBER HERE
+	);
+
+	$post_data = get_posts($args);
+	foreach($post_data as $post)
+	{
+		$link = get_permalink();
+		echo '<h3><a href="'.$link.'">' . get_the_title() . '</a></h3>';
+		echo "Published on " . get_the_date() . '<br/>';
+	}

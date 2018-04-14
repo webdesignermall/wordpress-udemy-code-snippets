@@ -1,0 +1,5 @@
+add_action('init','hide_admin_bar');
+function hide_admin_bar()
+{
+	show_admin_bar( false);
+}

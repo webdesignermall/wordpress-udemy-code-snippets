@@ -1,0 +1,76 @@
+<?php
+
+/*
+	Plugin Name: Delete Old Blogs Posts
+	Description: Get rid of blog posts over 2 years old.
+*/
+
+
+add_action('admin_menu','hwi_menu_clean_old_blog_posts');
+
+function hwi_menu_clean_old_blog_posts()
+{
+	add_posts_page('Clean Old Blog Posts', 'Delete Old Blog Posts', 'manage_options','delete_old_blog_posts', 'hwi_delete_old_blog_posts');
+}
+
+
+
+function hwi_delete_old_blog_posts()
+{
+
+		echo "<h2>Deleting Blog Posts</h2>";
+
+		$args = array(
+			'post_type'			=>	'post',
+			'orderby'			=>	'date',
+			'order'				=>	'DESC',
+			'posts_per_page'	=>	-1,
+			'date_query'    	=> array(
+				'column'  			=> 'post_date',
+				'before'   			=> '- 6 months',
+			)
+		);
+		$the_query = new WP_Query( $args );
+		// The Loop
+		if ( $the_query->have_posts() ) {
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				$plink = get_permalink();
+				$date = get_the_date();
+				$content = trim(substr(get_the_content(),0,100)) . '...';
+				if(get_the_title()!='') {
+					echo "<div style='padding:15px 0px; border-top:1px solid #CCC;'>";
+					echo '' . $date . '<br/>';
+					echo '<a style="color:#F00; font-size:14pt; " href="'.$plink.'">' . ucwords(strtolower(get_the_title())) . '</a><br/>';
+					if($content!='No description for this blog...') {
+						echo $content . '<br/>';
+					}
+					echo "</div>";
+				}
+
+				wp_delete_post( get_the_ID(), true );
+
+
+			}
+			/* Restore original Post Data */
+			wp_reset_postdata();
+		} else {
+			echo "All blogs are up to date.";
+		}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+?>

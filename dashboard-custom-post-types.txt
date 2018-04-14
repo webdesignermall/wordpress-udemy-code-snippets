@@ -1,0 +1,24 @@
+add_filter( 'dashboard_glance_items', 'wdm_show_glance_custom_post_types' );
+function wdm_show_glance_custom_post_types( $items = array() ) {
+    
+	$post_types = array( 'projects', 'tribe_events' );
+
+    foreach( $post_types as $type ) {
+        if( ! post_type_exists( $type ) ) continue;
+
+        $post_amt = wp_count_posts( $type );
+
+        if( $post_amt ) {
+            $published = intval( $post_amt->publish );
+            $post_type = get_post_type_object( $type );
+            $text = _n( '%s ' . $post_type->labels->singular_name, '%s ' . $post_type->labels->name, $published );
+            $text = sprintf( $text, number_format_i18n( $published ) );
+            if ( current_user_can( $post_type->cap->edit_posts ) ) {
+                $items[] = sprintf( '<a href="/wp-admin/edit.php?post_type='.$type.'">%2$s', $type, $text ) . "</a>\n";
+            } else {
+                $items[] = sprintf( '<span class="%1$s-count">%2$s</span>', $type, $text ) . "\n";
+            }
+        }
+    }
+    return $items;
+}

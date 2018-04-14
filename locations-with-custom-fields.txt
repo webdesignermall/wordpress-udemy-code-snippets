@@ -1,0 +1,152 @@
+<?php
+/*
+Plugin Name: Locations
+Description: A list of all locations
+*/
+
+add_action( 'init', 'create_location_type' );
+/*
+* Creating a function to create our Custom Post Type
+*/
+
+
+add_action( 'init', 'location_taxonomies', 0 );
+function location_taxonomies() {
+
+ $labels = array(
+    'name'              => _x( 'Location Types', 'taxonomy general name' ),
+    'singular_name'     => _x( 'Location Type', 'taxonomy singular name' ),
+    'add_new_item'     => _x( 'Add New Location Type'),
+  );
+  $args = array(
+    'labels' => $labels,
+    'hierarchical' => true,
+  );
+
+	register_taxonomy( 'loc_type', 'locations', $args );
+}
+
+
+function create_location_type() {
+
+// Set UI labels for Custom Post Type
+	$labels = array(
+		'name'                => _x( 'Locations', 'Post Type General Name' ),
+		'singular_name'       => _x( 'Location', 'Post Type Singular Name' ),
+		'menu_name'           => __( 'Locations' ),
+		'parent_item_colon'   => __( 'Parent Location' ),
+		'all_items'           => __( 'All Locations' ),
+		'view_item'           => __( 'View Location' ),
+		'add_new_item'        => __( 'Add New Location' ),
+		'add_new'             => __( 'Add New' ),
+		'edit_item'           => __( 'Edit Location' ),
+		'update_item'         => __( 'Update Location' ),
+		'search_items'        => __( 'Search Location' ),
+		'not_found'           => __( 'Not Found' ),
+		'not_found_in_trash'  => __( 'Not found in Trash' ),
+	);
+	
+// Set other options for Custom Post Type
+	
+	$args = array(
+		'label'               => __( 'locations', 'twentythirteen' ),
+		'description'         => __( 'All of our locations', 'twentythirteen' ),
+		'labels'              => $labels,
+		// Features this CPT supports in Post Editor
+		'supports'            => array( 'title', 'author', 'thumbnail', 'revisions', 'custom-fields', ),
+		// You can associate this CPT with a taxonomy or custom taxonomy. 
+		'taxonomies'          => array( 'location_type' ),
+		/* A hierarchical CPT is like Pages and can have
+		* Parent and child items. A non-hierarchical CPT
+		* is like Posts.
+		*/	
+		'hierarchical'        => false,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_admin_bar'   => true,
+		'menu_position'       => 5,
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'page',
+	);
+	
+	// Registering your Custom Post Type
+	register_post_type( 'locations', $args );
+
+}
+
+
+add_action( 'add_meta_boxes', 'location_address_information' );
+function location_address_information() {
+    add_meta_box( 
+        'location-info',
+        __( 'Location & Pool Information', 'myplugin_textdomain' ),
+        'get_location',
+        'locations',
+        'normal',
+        'high'
+    );
+}
+
+function get_location( $post ) {
+  wp_nonce_field( plugin_basename( __FILE__ ), 'get_street_box_content_nonce' );
+  
+  $location_phone 	= get_post_meta(get_the_ID(),'location_phone',true);
+  echo '<label for="location_phone">Phone</label> <input type="text" id="location_phone" name="location_phone" value="'.$location_phone.'" placeholder="Enter a Street" /><br/>';
+
+  $street_address 	= get_post_meta(get_the_ID(),'street_address',true);
+  echo '<label for="street_address">Street</label> <input type="text" id="street_address" name="street_address" value="'.$street_address.'" placeholder="Enter a Street" /><br/>';
+
+  $location_city 	= get_post_meta(get_the_ID(),'location_city',true);
+  echo '<label for="location_city">City</label> <input type="text" id="location_city" name="location_city" value="'.$location_city.'" placeholder="Enter a City" />';
+
+  $location_state 	= get_post_meta(get_the_ID(),'location_state',true);
+  echo '&nbsp;<label for="location_state">State</label> <input size="5" type="text" id="location_state" name="location_state" value="'.$location_state.'" placeholder="State" />';
+
+  $location_zip 	= get_post_meta(get_the_ID(),'location_zip',true);
+  echo '&nbsp;<label for="location_zip">Zip Code</label> <input size="10" type="text" id="location_zip" name="location_zip" value="'.$location_zip.'" placeholder="Zip Code" />';
+
+  $location_pool_name = get_post_meta(get_the_ID(),'location_pool_name',true);
+  echo '<hr/><label for="location_pool_name">Pool Name</label> <input size="40" type="text" id="location_pool_name" name="location_pool_name" value="'.$location_pool_name.'" placeholder="Pool Name" /><br/>';
+
+  $location_latitude = get_post_meta(get_the_ID(),'location_latitude',true);
+  echo '<hr/><label for="location_latitude">Latitude</label> <input size="40" type="text" id="location_latitude" name="location_latitude" value="'.$location_latitude.'" placeholder="Enter Latitude" />';
+
+  $location_longitude = get_post_meta(get_the_ID(),'location_longitude',true);
+  echo '&nbsp;&nbsp;<label for="location_longitude">Longitude</label> <input size="40" type="text" id="location_longitude" name="location_longitude" value="'.$location_longitude.'" placeholder="Enter longitude" /><br/>';
+}
+
+add_action( 'save_post', 'save_location_meta' );
+function save_location_meta( $post_id ) {
+
+  $street_address = $_POST['street_address'];
+  update_post_meta( $post_id, 'street_address', $street_address );
+
+  $location_city = $_POST['location_city'];
+  update_post_meta( $post_id, 'location_city', $location_city );
+
+  $location_state = $_POST['location_state'];
+  update_post_meta( $post_id, 'location_state', $location_state );
+
+  $location_zip = $_POST['location_zip'];
+  update_post_meta( $post_id, 'location_zip', $location_zip );
+
+  $location_phone = $_POST['location_phone'];
+  update_post_meta( $post_id, 'location_phone', $location_phone );
+
+  $location_pool_name = $_POST['location_pool_name'];
+  update_post_meta( $post_id, 'location_pool_name', $location_pool_name );
+
+  $location_latitude = $_POST['location_latitude'];
+  update_post_meta( $post_id, 'location_latitude', $location_latitude );
+
+  $location_longitude = $_POST['location_longitude'];
+  update_post_meta( $post_id, 'location_longitude', $location_longitude );
+}
+
+
+?>

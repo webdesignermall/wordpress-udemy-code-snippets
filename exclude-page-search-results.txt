@@ -1,0 +1,18 @@
+<?php
+/*
+Plugin Name:  WordPress Code Snippet: Exclude Pages From Search Results
+Description: ​By default, WordPress included pages in search results, but if you have a blog and only want posts to come up, we can tell WordPress to include ONLY posts with this code snippet.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function redirect_to_post_on_1_search_result() {
+    if (is_search()) {
+        global $wp_query;
+        if ($wp_query->post_count == 1) {
+            wp_redirect( get_permalink( $wp_query->posts['0']->ID ) );
+        }
+    }
+}
+add_action('template_redirect', 'redirect_to_post_on_1_search_result');

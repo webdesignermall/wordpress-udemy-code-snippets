@@ -1,0 +1,23 @@
+<?php
+/*
+Plugin Name: Create new user roles
+Description: With this code snippet, you can create new user roles.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+$super_user_role = add_role(
+'super_user',__('Super User'),
+array()
+);
+
+$observer_user_role = add_role(
+'observer',__('Observer'),
+array()
+);
+
+$qatester_user_role = add_role(
+'qa_tester',__('QA Tester'),
+array()
+);

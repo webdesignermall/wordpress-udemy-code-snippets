@@ -1,0 +1,11 @@
+   add_action( 'init', 'wdm_redirect_non_admins' );
+    function wdm_redirect_non_admins() {
+
+			define('CUSTOM_PAGE', home_url() . '/youre_not_admin');
+			$allowed_roles = array('administrator','editor');
+
+            if ( is_admin() && ! current_user_can( $allowed_roles ) ) {
+                    wp_redirect( CUSTOM_PAGE );
+                    exit;
+            }
+    }

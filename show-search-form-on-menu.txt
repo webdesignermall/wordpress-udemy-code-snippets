@@ -1,0 +1,17 @@
+<?php
+/*
+Plugin Name: Add Search Form To Any WordPress Menu
+Description: By default, WordPress does not include a search bar in the navigation menus. This code snippet allows you to automatically include it.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function show_search_form_on_menu($items, $args) {
+if( $args->theme_location == 'primary' )
+        $items .= '<li class="search"><form role="search" method="get" id="searchform" action="'.home_url( '/' ).'"><input type="text" value="search" name="s" id="s" /><input type="submit" id="searchsubmit" value="'. esc_attr__('Search') .'" /></form></li>';
+        $items .= '<li class="search"><a href="https://www.webdesignermall.com">WebDesignerMall.com</a></li>';
+        return $items;
+}
+add_filter('wp_nav_menu_items', 'show_search_form_on_menu', 10, 2);
+

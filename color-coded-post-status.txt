@@ -1,0 +1,17 @@
+add_action('admin_footer','wdm_status_color');
+function wdm_status_color(){
+	$colors = array (
+		'publish'=>'#CCFFCC',
+		'pending'=>'#CCCCFF',
+		'draft'=>'#FF9900',
+		'future'=>'#FFFF00',
+		'private'=>'#FFCCCC',
+	);
+	echo "<style>";
+	foreach($colors as $hex=>$color)
+	{
+		echo ".status-$hex{background: $color !important;}";
+	}
+	echo "</style>";
+}	
+

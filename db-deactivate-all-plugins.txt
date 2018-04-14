@@ -1,0 +1,13 @@
+To see the active plugins in the database
+1. select * from wp_options where option_name='active_plugins';
+2. IMPORTANT: Copy the option_value field data
+
+To disable all the plugins
+update wp_options set option_value='' where option_name='active_plugins';
+
+To reable plugins:
+update wp_options set option_value='FIELD DATA' where option_name='active_plugins';
+
+We use this on WebDesignerMall.com.
+
+

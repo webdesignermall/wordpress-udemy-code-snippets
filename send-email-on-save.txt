@@ -1,0 +1,29 @@
+<?php
+
+/*
+ * Plugin Name: Email Me
+ * Author: Bruce Chamoff
+ * Author URL: http://www.bragaboutmysite.com
+ */
+
+add_action('save_post','email_me');
+
+function email_me($post_id)
+{
+
+	$subject = 'EMAIL SUBJECT HERE';
+	
+	$post_title = get_the_title( $post_id );
+	$post_url = get_permalink( $post_id );
+
+	$message = "A new website is pending:\n\n";
+	$message .= $post_title . ": " . $post_url;
+
+	// Send email to admin.
+	wp_mail( 'YOUR EMAIL ADRESS HERE', $subject, $message );	
+}
+
+
+
+
+?>

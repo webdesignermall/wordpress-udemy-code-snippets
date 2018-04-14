@@ -1,0 +1,19 @@
+<?php
+/*
+Plugin Name: Highlight the searched word with CSS
+Description: With this code snippet, you can highlight words in the search terms.
+Author: Bruce Chamoff
+Version: 1.0
+Author URI: http://www.WebDesignerMall.com
+*/
+
+function wps_highlight_results($text){
+     if(is_search()){
+     $sr = get_query_var('s');
+     $keys = explode(" ",$sr);
+     $text = preg_replace('/('.implode('|', $keys) .')/iu', '<strong class="search-excerpt" style="background:yellow;">'.$sr.'</strong>', $text);
+     }
+     return $text;
+}
+add_filter('the_excerpt', 'wps_highlight_results');
+add_filter('the_title', 'wps_highlight_results');

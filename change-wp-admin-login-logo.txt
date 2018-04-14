@@ -1,0 +1,6 @@
+function change_wp_admin_login_logo() {
+    echo '<style type="text/css">
+        h1 a { background-image:url(ANY URL) !important; }
+    </style>';
+}
+add_action('login_head', 'change_wp_admin_login_logo');
